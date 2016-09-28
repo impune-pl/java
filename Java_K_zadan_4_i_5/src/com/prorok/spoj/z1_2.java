@@ -1,4 +1,6 @@
 package com.prorok.spoj;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.*;
 
 public class z1_2
@@ -14,8 +16,9 @@ public class z1_2
         y=in.nextInt();
         if(y<=12&&y>0)
         {
-        Calendar cal = new GregorianCalendar(x, y-1, 1);
-        System.out.println("Ilość dni w podanym miesiącu podanego roku: " + cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+            YearMonth month = YearMonth.of(x,y);
+            System.out.println("Ilość dni w podanym miesiącu podanego roku: " +  month.lengthOfMonth());
         }
         else System.out.println("Error!!!");
     }
