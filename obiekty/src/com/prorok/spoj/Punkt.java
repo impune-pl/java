@@ -1,13 +1,11 @@
 package com.prorok.spoj;
 import java.util.Scanner;
-/**
- * Created by mail-_000 on 2016-10-28.
- */
-public class Punkt implements Comparable<Punkt>
+
+class Punkt implements Comparable<Punkt>
 {
     private int height;
     private int width;
-    public Punkt()
+    Punkt()
     {
         Scanner in = new Scanner(System.in);
         System.out.println("Podaj wysokość punktu:");
@@ -20,11 +18,11 @@ public class Punkt implements Comparable<Punkt>
         width = w;
         height = h;
     }
-    public int getHeight()
+    int getHeight()
     {
         return height;
     }
-    public int getWidth()
+    int getWidth()
     {
         return width;
     }

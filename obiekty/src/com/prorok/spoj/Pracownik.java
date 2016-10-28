@@ -1,9 +1,7 @@
 package com.prorok.spoj;
 import java.util.Scanner;
-/**
- * Created by mail-_000 on 2016-10-28.
- */
-public class Pracownik
+
+class Pracownik
 {
     private String imie;
     private String nazwisko;
@@ -16,7 +14,7 @@ public class Pracownik
     {
         return (imie + nazwisko);
     }
-    public void printInfo()
+    void printInfo()
     {
         System.out.println(imie+" " + nazwisko+" wiek: "+wiek);
     }
@@ -24,13 +22,13 @@ public class Pracownik
     {
         return (imie +" "+ nazwisko+ " wiek: "+wiek);
     }
-    public Pracownik(String a, String b, int c)
+    Pracownik(String a, String b, int c)
     {
         imie = a;
         nazwisko = b;
         wiek = c;
     }
-    public Pracownik()
+    Pracownik()
     {
         Scanner in = new Scanner(System.in);
         System.out.println("Imie");

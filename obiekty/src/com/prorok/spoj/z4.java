@@ -2,12 +2,10 @@ package com.prorok.spoj;
 
 import java.util.Scanner;
 
-/**
- * Created by mail-_000 on 2016-10-28.
- */
-public class z4
+
+class z4
 {
-    public z4()
+    z4()
     {
         Pracownik[] nowi = new Pracownik[3];
         for(int x=0;x<3;x++)

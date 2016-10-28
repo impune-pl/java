@@ -1,12 +1,9 @@
 package com.prorok.spoj;
 import java.util.Scanner;
-/**
- * Created by mail-_000 on 2016-10-28.
- */
-public class LiczbaCalkowita
+class LiczbaCalkowita
 {
     private int liczba;
-    public void wyswietlLiczbe()
+    void wyswietlLiczbe()
     {
         System.out.println(liczba);
     }
@@ -14,13 +11,13 @@ public class LiczbaCalkowita
     {
         liczba = nowa;
     }
-    public void pobierzLiczbe()
+    void pobierzLiczbe()
     {
         System.out.println("Podaj nową wartość");
         Scanner in = new Scanner(System.in);
         liczba = in.nextInt();
     }
-    public LiczbaCalkowita(int nowa)
+    LiczbaCalkowita(int nowa)
     {
         liczba = nowa;
     }
