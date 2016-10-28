@@ -5,6 +5,7 @@ package com.prorok.spoj;
  */
 public class Prostokat
 {
+    private boolean OK;
     Punkt[] rogi = new Punkt[4];
     public Prostokat(Punkt[] punkty)
     {
@@ -17,6 +18,11 @@ public class Prostokat
                 x++;
             }
         }
+        else OK=false;
+    }
+    public boolean isOK()
+    {
+        return OK;
     }
     public void drawProstokat ()
     {

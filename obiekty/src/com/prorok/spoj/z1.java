@@ -16,6 +16,6 @@ public class z1
             punkty[x]= new Punkt();
         }
         Prostokat pierwszy = new Prostokat(punkty);
-        pierwszy.drawProstokat();
+        if(pierwszy.isOK())pierwszy.drawProstokat();
     }
 }
