@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="370.0" maxWidth="600.0" minHeight="370.0" minWidth="600.0" pickOnBounds="false" prefHeight="370.0" prefWidth="600.0" scaleShape="false" stylesheets="@../../../Komunikator/src/prorok/komunikator/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="370.0" maxWidth="600.0" minHeight="370.0" minWidth="600.0" pickOnBounds="false" prefHeight="370.0" prefWidth="600.0" scaleShape="false" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="200.0" layoutY="38.0" maxHeight="300.0" maxWidth="600.0" minHeight="262.0" minWidth="400.0" prefHeight="262.0" prefWidth="600.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
          <children>
