@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="370.0" maxWidth="600.0" minHeight="370.0" minWidth="600.0" prefHeight="370.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="200.0" prefHeight="300.0" prefWidth="400.0">
+         <children>
+            <ListView fx:id="messageDisplay" prefHeight="400.0" prefWidth="400.0" />
+         </children>
+      </VBox>
+      <VBox prefHeight="370.0" prefWidth="200.0">
+         <children>
+            <ListView fx:id="adressLinst" prefHeight="370.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+      <VBox layoutX="200.0" layoutY="300.0" prefHeight="70.0" prefWidth="330.0">
+         <children>
+            <TextArea fx:id="messageWrite" prefHeight="200.0" prefWidth="200.0" promptText="Write your message here" />
+         </children>
+      </VBox>
+      <VBox layoutX="530.0" layoutY="300.0" prefHeight="70.0" prefWidth="70.0">
+         <children>
+            <Button id="submitButton" fx:id="messageSend" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" stylesheets="@style.css" text="SEND">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
