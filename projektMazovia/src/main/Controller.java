@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
+import main.netController;
 
 public class Controller implements Initializable
 {
@@ -29,12 +30,22 @@ public class Controller implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        netController mainNetController = new netController();
+
         sendButton.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
             {
-                //TODO: wysyłanie wiadomości z pola tekstowego
+                String mContent = messengeField.getText();
+                if(mContent.equals(""))
+                {
+                    //TODO: wypisanie okienka "błąd, brak tekstu wiadomości;
+                }
+                else
+                {
+                    //TODO: stworzenie i wysłanie wiadomości przez TCP przy użyciu netController
+                }
             }
         });
         connectButton.setOnAction(new EventHandler<ActionEvent>()
@@ -42,7 +53,7 @@ public class Controller implements Initializable
             @Override
             public void handle(ActionEvent event)
             {
-                //TODO: inicjowanie połączenia z adresem docelowym
+                //TODO: inicjowanie połączenia z adresem docelowym poprzez wysłanie "hello" w TCP
             }
         });
     }

@@ -1,17 +1,10 @@
 package main;
 import java.net.*;
 import java.util.*;
-public class netController
+public class netController implements Runnable
 {
-    public netController()
+    public void run()
     {
-        try
-        {
-            ServerSocket newConnectionListener = new ServerSocket(8585);
-            
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-        }
+
     }
 }
