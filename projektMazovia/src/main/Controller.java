@@ -1,4 +1,5 @@
 package main;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -6,8 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import java.net.URL;
+import java.net.*;
 import java.util.ResourceBundle;
+import java.util.concurrent.*;
+
 import main.netController;
 
 public class Controller implements Initializable
@@ -26,25 +29,29 @@ public class Controller implements Initializable
 
     @FXML
     private Button connectButton;
-
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        netController mainNetController = new netController();
-
+        final ArrayBlockingQueue<message> toSend = new ArrayBlockingQueue<>(20);
+        final ArrayBlockingQueue<message> toDisplay = new ArrayBlockingQueue<>(20);
+        final ArrayBlockingQueue<String> ipChange = new ArrayBlockingQueue<>(2);
+        Runnable netControlRunnable = new netController(ipChange, toSend, toDisplay);
+        Thread netControl = new Thread(netControlRunnable);
+        netControl.start();
         sendButton.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
             {
                 String mContent = messengeField.getText();
-                if(mContent.equals(""))
+                if(mContent.trim().equals(""))
                 {
                     //TODO: wypisanie okienka "błąd, brak tekstu wiadomości;
                 }
                 else
                 {
-                    //TODO: stworzenie i wysłanie wiadomości przez TCP przy użyciu netController
+                    message newMessage = new message(mContent);
+                    toSend.add(newMessage);
                 }
             }
         });
@@ -53,9 +60,18 @@ public class Controller implements Initializable
             @Override
             public void handle(ActionEvent event)
             {
-                //TODO: inicjowanie połączenia z adresem docelowym poprzez wysłanie "hello" w TCP
+                if(IpValidation.isIp(ipInput.getText()))
+                {
+                    ipChange.add("1");
+                    ipChange.add(ipInput.getText());
+                }
+                else
+                {
+                    //TODO: komunikat o błędnym ip;
+                }
             }
         });
+        //TODO: observablelist do którego będą dodawane wiadomości z toDisplay, event odpowiedzialny za dodawanie tych wiadomości i drugi event do czyszczenia wyświetlonych wiadomości
     }
 
 }

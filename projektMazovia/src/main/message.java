@@ -6,5 +6,12 @@ package main;
 public class message
 {
     private String text;
-    private String author;
+    public message(String text)
+    {
+        this.text = text;
+    }
+    public String getText()
+    {
+        return text;
+    }
 }
