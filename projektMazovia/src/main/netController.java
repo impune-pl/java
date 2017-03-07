@@ -12,6 +12,7 @@ public class netController implements Runnable
     ArrayBlockingQueue<message> toSend;
     ArrayBlockingQueue<message> toDisplay;
     DataOutputStream sender;
+    DataInputStream receiver;
     public netController(ArrayBlockingQueue<String> alfa,ArrayBlockingQueue<message> beta, ArrayBlockingQueue<message> gamma, String ip)
     {
         ipChanges = alfa;
@@ -25,6 +26,7 @@ public class netController implements Runnable
         {
             socket = new Socket(serverIp, 5161);
             sender = new DataOutputStream(socket.getOutputStream());
+            receiver = new DataInputStream(socket.getInputStream());
         }
         catch(Exception e)
         {
@@ -54,6 +56,15 @@ public class netController implements Runnable
                     {
                         e.printStackTrace();
                     }
+                }
+                try
+                {
+                    String a = receiver.readUTF();
+                    toDisplay.add(new message(a));
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
                 }
             }
     }
