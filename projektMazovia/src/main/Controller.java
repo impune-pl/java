@@ -2,8 +2,6 @@ package main;
 import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,7 +11,6 @@ import java.net.*;
 import java.util.ResourceBundle;
 import java.util.concurrent.*;
 import javafx.beans.property.*;
-import main.netController;
 
 public class Controller implements Initializable
 {
@@ -35,46 +32,37 @@ public class Controller implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
+        String serverIp = "127.0.0.1";
         final ArrayBlockingQueue<message> toSend = new ArrayBlockingQueue<>(20);
         final ArrayBlockingQueue<message> toDisplay = new ArrayBlockingQueue<>(20);
         final ArrayBlockingQueue<String> ipChange = new ArrayBlockingQueue<>(2);
-        Runnable netControlRunnable = new netController(ipChange, toSend, toDisplay);
+        Runnable netControlRunnable = new netController(ipChange, toSend, toDisplay, serverIp);
         Thread netControl = new Thread(netControlRunnable);
         netControl.start();
         messangeList.setItems(Displayed);
-        sendButton.setOnAction(new EventHandler<ActionEvent>()
+        sendButton.setOnAction(event ->
         {
-            @Override
-            public void handle(ActionEvent event)
+            String mContent = messengeField.getText();
+            if(mContent.trim().equals(""))
+            {}
+            else
             {
-                String mContent = messengeField.getText();
-                if(mContent.trim().equals(""))
-                {
-                    //TODO: wypisanie okienka "błąd, brak tekstu wiadomości";
-                }
-                else
-                {
-                    message newMessage = new message(mContent);
-                    toSend.add(newMessage);
-                    Displayed.add("me: "+newMessage.getText());
-                }
+                message newMessage = new message(mContent);
+                toSend.add(newMessage);
+                Displayed.add("me: "+newMessage.getText());
             }
         });
-        connectButton.setOnAction(new EventHandler<ActionEvent>()
+        connectButton.setOnAction(event ->
         {
-            @Override
-            public void handle(ActionEvent event)
+            if(IpValidation.isIp(ipInput.getText()))
             {
-                if(IpValidation.isIp(ipInput.getText()))
-                {
-                    ipChange.add("1");
-                    ipChange.add(ipInput.getText());
-                    Displayed.removeAll();
-                }
-                else
-                {
-                    //TODO: komunikat o błędnym ip;
-                }
+                ipChange.add("1");
+                ipChange.add(ipInput.getText());
+                Displayed.removeAll();
+            }
+            else
+            {
+                //TODO: komunikat o błędnym ip;
             }
         });
         final LongProperty LastUpdate = new SimpleLongProperty();
@@ -102,7 +90,7 @@ public class Controller implements Initializable
             }
         };
         timer.start();
-        //TODO: observablelist do którego będą dodawane wiadomości z toDisplay, event odpowiedzialny za dodawanie tych wiadomości i drugi event do czyszczenia wyświetlonych wiadomości
+        //TODO: dialog pobierający ip serwera -- WAŻNE!!!!!!!!!!!!!!!!!
 
     }
 

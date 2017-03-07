@@ -6,54 +6,33 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class netController implements Runnable
 {
-    private String ip;
     private Socket socket;
-    private ServerSocket serverSocket;
-    private boolean connected;
+    private String serverIp;
     final ArrayBlockingQueue<String> ipChanges;
     ArrayBlockingQueue<message> toSend;
     ArrayBlockingQueue<message> toDisplay;
     DataOutputStream sender;
-    public netController(ArrayBlockingQueue<String> alfa,ArrayBlockingQueue<message> beta, ArrayBlockingQueue<message> gamma)
+    public netController(ArrayBlockingQueue<String> alfa,ArrayBlockingQueue<message> beta, ArrayBlockingQueue<message> gamma, String ip)
     {
         ipChanges = alfa;
         toSend = beta;
         toDisplay = gamma;
+        serverIp = ip;
     }
     public void run()
     {
         try
         {
-            serverSocket = new ServerSocket(5161);
-        } catch (IOException e)
+            socket = new Socket(serverIp, 5161);
+            sender = new DataOutputStream(socket.getOutputStream());
+        }
+        catch(Exception e)
         {
             e.printStackTrace();
         }
         while (!Thread.currentThread().isInterrupted())
             {
-                serverSocket.
-                if(ipChanges.contains("1"))
-                {
-                    try
-                    {
-                        try
-                        {
-                            sender.close();
-                        }
-                        catch(IOException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        ipChanges.remove("1");
-                        socket = new Socket(ipChanges.poll(), 6666);
-                        sender = new DataOutputStream(socket.getOutputStream());
-                    }
-                    catch(Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-                else if(!toSend.isEmpty())
+                if(!toSend.isEmpty())
                 {
                     try
                     {
@@ -65,9 +44,17 @@ public class netController implements Runnable
                         e.printStackTrace();
                     }
                 }
-                else if()
-                //TODO: dodać obsługę server socket (odbieranie połączenia) | dokończyć obsługę nawiązywania połączenia | dodać odbiór i wysyłkę wiadomości
-
+                if(ipChanges.contains("1"))
+                {
+                    try
+                    {
+                        sender.writeUTF("IPCHANGE" + ipChanges.poll());
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
     }
 }
