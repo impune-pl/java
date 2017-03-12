@@ -33,12 +33,15 @@ public class Controller implements Initializable
     public void initialize(URL location, ResourceBundle resources)
     {
         String serverIp = "127.0.0.1";//TODO: pobieranie za pomocą dialogu!!!!
+
         final ArrayBlockingQueue<message> toSend = new ArrayBlockingQueue<>(20);
         final ArrayBlockingQueue<message> toDisplay = new ArrayBlockingQueue<>(20);
         final ArrayBlockingQueue<String> ipChange = new ArrayBlockingQueue<>(2);
+
         Runnable netControlRunnable = new netController(ipChange, toSend, toDisplay, serverIp);
         Thread netControl = new Thread(netControlRunnable);
         netControl.start();
+
         messangeList.setItems(Displayed);
         sendButton.setOnAction(event ->
         {
@@ -47,22 +50,14 @@ public class Controller implements Initializable
             {}
             else
             {
+                if(toSend.remainingCapacity()==0)
+                {
+                    toSend.clear();
+                }
                 message newMessage = new message(mContent);
+                System.out.println("new message "+mContent);
                 toSend.add(newMessage);
                 Displayed.add("me: "+newMessage.getText());
-            }
-        });
-        connectButton.setOnAction(event ->
-        {
-            if(IpValidation.isIp(ipInput.getText()))
-            {
-                ipChange.add("1");
-                ipChange.add(ipInput.getText());
-                Displayed.removeAll();
-            }
-            else
-            {
-                //TODO: komunikat o błędnym ip;
             }
         });
         final LongProperty LastUpdate = new SimpleLongProperty();

@@ -25,6 +25,7 @@ public class netController implements Runnable
         try
         {
             socket = new Socket(serverIp, 5161);
+            System.out.println("CONNECTION ESTABLISHED");
             sender = new DataOutputStream(socket.getOutputStream());
             receiver = new DataInputStream(socket.getInputStream());
         }
@@ -32,25 +33,15 @@ public class netController implements Runnable
         {
             e.printStackTrace();
         }
-        while (!Thread.currentThread().isInterrupted())
-            {
-                if(!toSend.isEmpty())
+        while (true)
+        {
+                if(toSend.peek()!=null)
                 {
                     try
                     {
+                        System.out.println("SENDING");
                         sender.writeUTF(toSend.poll().getText());
                         sender.flush();
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-                if(ipChanges.contains("1"))
-                {
-                    try
-                    {
-                        sender.writeUTF("IPCHANGE" + ipChanges.poll());
                     }
                     catch (IOException e)
                     {
@@ -66,6 +57,6 @@ public class netController implements Runnable
                 {
                     e.printStackTrace();
                 }
-            }
+        }
     }
 }
