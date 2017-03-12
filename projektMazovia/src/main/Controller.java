@@ -32,7 +32,7 @@ public class Controller implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        String serverIp = "127.0.0.1";
+        String serverIp = "127.0.0.1";//TODO: pobieranie za pomocą dialogu!!!!
         final ArrayBlockingQueue<message> toSend = new ArrayBlockingQueue<>(20);
         final ArrayBlockingQueue<message> toDisplay = new ArrayBlockingQueue<>(20);
         final ArrayBlockingQueue<String> ipChange = new ArrayBlockingQueue<>(2);
