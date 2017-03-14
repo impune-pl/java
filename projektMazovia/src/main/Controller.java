@@ -34,11 +34,10 @@ public class Controller implements Initializable
     {
         String serverIp = "127.0.0.1";//TODO: pobieranie za pomocą dialogu!!!!
 
-        final ArrayBlockingQueue<message> toSend = new ArrayBlockingQueue<>(20);
-        final ArrayBlockingQueue<message> toDisplay = new ArrayBlockingQueue<>(20);
-        final ArrayBlockingQueue<String> ipChange = new ArrayBlockingQueue<>(2);
+        ArrayBlockingQueue<message> toSend = new ArrayBlockingQueue<>(20);
+        ArrayBlockingQueue<message> toDisplay = new ArrayBlockingQueue<>(20);
 
-        Runnable netControlRunnable = new netController(ipChange, toSend, toDisplay, serverIp);
+        Runnable netControlRunnable = new netController(toSend, toDisplay, serverIp);
         Thread netControl = new Thread(netControlRunnable);
         netControl.start();
 
@@ -56,7 +55,13 @@ public class Controller implements Initializable
                 }
                 message newMessage = new message(mContent);
                 System.out.println("new message "+mContent);
-                toSend.add(newMessage);
+                try
+                {
+                    toSend.offer(newMessage, 2L, TimeUnit.MILLISECONDS);
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
                 Displayed.add("me: "+newMessage.getText());
             }
         });

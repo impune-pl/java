@@ -1,23 +1,21 @@
 package main;
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class netController implements Runnable
 {
     private Socket socket;
     private String serverIp;
-    final ArrayBlockingQueue<String> ipChanges;
-    ArrayBlockingQueue<message> toSend;
-    ArrayBlockingQueue<message> toDisplay;
+    private ArrayBlockingQueue<message> toSend;
+    private ArrayBlockingQueue<message> toDisplay;
     DataOutputStream sender;
     DataInputStream receiver;
-    public netController(ArrayBlockingQueue<String> alfa,ArrayBlockingQueue<message> beta, ArrayBlockingQueue<message> gamma, String ip)
+    public netController(ArrayBlockingQueue<message> outcoming, ArrayBlockingQueue<message> incoming, String ip)
     {
-        ipChanges = alfa;
-        toSend = beta;
-        toDisplay = gamma;
+        toSend = outcoming;
+        toDisplay = incoming;
         serverIp = ip;
     }
     public void run()
@@ -40,7 +38,13 @@ public class netController implements Runnable
                     try
                     {
                         System.out.println("SENDING");
-                        sender.writeUTF(toSend.poll().getText());
+                        try
+                        {
+                            sender.writeUTF(toSend.poll(2L, TimeUnit.MILLISECONDS).getText());
+                        } catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
                         sender.flush();
                     }
                     catch (IOException e)
@@ -51,7 +55,13 @@ public class netController implements Runnable
                 try
                 {
                     String a = receiver.readUTF();
-                    toDisplay.add(new message(a));
+                    try
+                    {
+                        toDisplay.offer(new message(a),2L,TimeUnit.MILLISECONDS);
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
                 catch (IOException e)
                 {
